@@ -1,6 +1,6 @@
 import {Drzava} from "./Models/Drzava"
 import {User} from "./Models/User"
-import {GetDrzava} from "./Logic/observables"
+import {GetDrzava, SetupButtons} from "./Logic/observables"
 
 let Btns: HTMLButtonElement[] = []; // 0 - veca | 1 - manja 
 let Zastave: HTMLImageElement[] = []; // 0 - Leva | 1 - Desna
@@ -30,8 +30,24 @@ window.onload =  async function()
   Drzave[0] = new Drzava();
   Drzave[1] = new Drzava();
 
-  Drzave[0] = await GetDrzava();
-  DrzavaNameLabel[0].innerHTML = Drzave[0].ime;
-  DrzavaPovLabel[0].innerHTML = Drzave[0].povrsina.toString();
-  Zastave[0].src = Drzave[0].zastava;
+  for(let i = 0 ; i < Drzave.length; i++)
+  {
+    Drzave[i] = await GetDrzava();
+    DrzavaNameLabel[i].innerHTML = Drzave[i].ime;
+    DrzavaPovLabel[i].innerHTML = Drzave[i].povrsina.toString();
+    Zastave[i].src = Drzave[i].zastava;
+  }
+  DrzavaPovLabel[1].style.visibility ="hidden";
+
+  let $DugmeEvent = SetupButtons(Btns);
+
+  $DugmeEvent[0].subscribe(async function()
+{
+    console.log("dugme vece")
+  
+})
+$DugmeEvent[1].subscribe(async function(){ 
+
+    console.log("dugme manje")
+});
 }
