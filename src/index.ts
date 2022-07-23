@@ -27,5 +27,11 @@ window.onload =  async function()
   BrojPoena[0] = document.getElementById("br_poena") as HTMLLabelElement;
   BrojPoena[1] = document.getElementById("max_poena") as HTMLLabelElement;
 
+  Drzave[0] = new Drzava();
+  Drzave[1] = new Drzava();
 
+  Drzave[0] = await GetDrzava();
+  DrzavaNameLabel[0].innerHTML = Drzave[0].ime;
+  DrzavaPovLabel[0].innerHTML = Drzave[0].povrsina.toString();
+  Zastave[0].src = Drzave[0].zastava;
 }
