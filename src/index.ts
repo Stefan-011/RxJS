@@ -1,6 +1,7 @@
 import {Drzava} from "./Models/Drzava"
 import {User} from "./Models/User"
 import {GetDrzava, SetupButtons} from "./Logic/observables"
+import { FormatPovrsina } from "./Logic/utilities";
 
 let Btns: HTMLButtonElement[] = []; // 0 - veca | 1 - manja 
 let Zastave: HTMLImageElement[] = []; // 0 - Leva | 1 - Desna
@@ -37,20 +38,34 @@ window.onload =  async function()
     }
     while(Drzave[i].ime == DrzavaNameLabel[0].innerHTML) 
     DrzavaNameLabel[i].innerHTML = Drzave[i].ime;
-    DrzavaPovLabel[i].innerHTML = Drzave[i].povrsina.toString();
+    DrzavaPovLabel[i].innerHTML = FormatPovrsina(Drzave[i].povrsina);
     Zastave[i].src = Drzave[i].zastava;
   }
-  DrzavaPovLabel[1].style.visibility ="hidden";
+  //DrzavaPovLabel[1].style.visibility ="hidden";
 
   let $DugmeEvent = SetupButtons(Btns);
 
   $DugmeEvent[0].subscribe(async function()
 {
-    console.log("dugme vece")
+  if(Drzave[1].povrsina >= Drzave[0].povrsina)
+  {
+    alert("tacno")
+  }
+  else
+  {
+    alert("greska")
+  }
   
 })
 $DugmeEvent[1].subscribe(async function(){ 
 
-    console.log("dugme manje")
+    if(Drzave[1].povrsina <= Drzave[0].povrsina)
+  {
+    alert("tacno")
+  }
+  else
+  {
+    alert("greska")
+  }
 });
 }
