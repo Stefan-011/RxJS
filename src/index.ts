@@ -32,7 +32,10 @@ window.onload =  async function()
 
   for(let i = 0 ; i < Drzave.length; i++)
   {
-    Drzave[i] = await GetDrzava();
+    do{
+      Drzave[i] = await GetDrzava();
+    }
+    while(Drzave[i].ime == DrzavaNameLabel[0].innerHTML) 
     DrzavaNameLabel[i].innerHTML = Drzave[i].ime;
     DrzavaPovLabel[i].innerHTML = Drzave[i].povrsina.toString();
     Zastave[i].src = Drzave[i].zastava;
