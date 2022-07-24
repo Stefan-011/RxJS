@@ -1,6 +1,6 @@
 import {Drzava} from "./Models/Drzava"
 import {User} from "./Models/User"
-import {GetDrzava, SetupButtons} from "./Logic/observables"
+import {GetDrzava, GetNewOne, SetupButtons} from "./Logic/observables"
 import { FormatPovrsina } from "./Logic/utilities";
 
 let Btns: HTMLButtonElement[] = []; // 0 - veca | 1 - manja 
@@ -41,7 +41,7 @@ window.onload =  async function()
     DrzavaPovLabel[i].innerHTML = FormatPovrsina(Drzave[i].povrsina);
     Zastave[i].src = Drzave[i].zastava;
   }
-  //DrzavaPovLabel[1].style.visibility ="hidden";
+  DrzavaPovLabel[1].style.visibility ="hidden";
 
   let $DugmeEvent = SetupButtons(Btns);
 
@@ -49,7 +49,19 @@ window.onload =  async function()
 {
   if(Drzave[1].povrsina >= Drzave[0].povrsina)
   {
-    alert("tacno")
+    alert("tacno");
+    DrzavaPovLabel[1].style.visibility ="visible";
+    let PovArr = Drzave
+    .filter(item=>item.povrsina > 0)
+    .map(item=>item.id)
+    let fetchObs = await GetNewOne(PovArr[0],PovArr[1]);
+    fetchObs.subscribe((data)=>
+   {
+    DrzavaNameLabel[1].innerHTML = data[0].ime;
+    DrzavaPovLabel[1].innerHTML = FormatPovrsina(data[0].povrsina);
+    Zastave[1].src = data[0].zastava;
+    DrzavaPovLabel[1].style.visibility ="hidden";
+   })
   }
   else
   {
@@ -62,6 +74,18 @@ $DugmeEvent[1].subscribe(async function(){
     if(Drzave[1].povrsina <= Drzave[0].povrsina)
   {
     alert("tacno")
+    DrzavaPovLabel[1].style.visibility ="visible";
+    let PovArr = Drzave
+    .filter(item=>item.povrsina > 0)
+    .map(item=>item.id)
+    let fetchObs = await GetNewOne(PovArr[0],PovArr[1]);
+    fetchObs.subscribe((data)=>
+    {
+     DrzavaNameLabel[1].innerHTML = data[0].ime;
+     DrzavaPovLabel[1].innerHTML = FormatPovrsina(data[0].povrsina);
+     Zastave[1].src = data[0].zastava;
+     DrzavaPovLabel[1].style.visibility ="hidden";
+    })
   }
   else
   {

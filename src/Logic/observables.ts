@@ -1,4 +1,4 @@
-import { debounceTime, fromEvent, merge, Observable } from "rxjs";
+import { debounceTime, from, fromEvent, merge, Observable } from "rxjs";
 import { environments } from "../environments";
 
 export function GetDrzava()
@@ -31,4 +31,24 @@ export function GetDrzava()
     ObsArr[0] = $DugmeEvent1.pipe(debounceTime(500));
     ObsArr[1] = $DugmeEvent2.pipe(debounceTime(500));
     return ObsArr;
+  }
+
+  export function GetNewOne(id1:number,id2:number)
+  {
+    let ID = id1;
+    while(ID == id1 || ID == id2)
+    {
+      ID = Math.round(Math.random()* (7 - 1 + 1) + 1);
+    }
+    
+    return from(fetch(environments.API_URL+`/Countries/?id=${ID}`)
+    .then((data)=>
+    {
+      if(data.ok)
+      return data.json();
+      else throw new Error("Drzava nije pronadjena");
+    })
+    .catch((err) => (console.log(err)))
+    );
+    
   }
