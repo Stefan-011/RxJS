@@ -32,6 +32,13 @@ export function GetDrzava()
     ObsArr[0] = $DugmeEvent1.pipe(debounceTime(500));
     ObsArr[1] = $DugmeEvent2.pipe(debounceTime(500));
     return ObsArr;
+
+    ObsArr[0].subscribe(async function()
+    {
+
+    })
+      
+    
   }
 
   export function GetNewOne(id1:number,id2:number)

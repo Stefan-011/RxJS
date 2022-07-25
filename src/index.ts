@@ -1,7 +1,7 @@
 import {Drzava} from "./Models/Drzava"
 import {User} from "./Models/User"
 import {GetDrzava, GetNewOne, SetupButtons, TakeUserName} from "./Logic/observables"
-import { FormatPovrsina } from "./Logic/utilities";
+import { DrawDrzave, FormatPovrsina} from "./Logic/utilities";
 
 let Btns: HTMLButtonElement[] = []; // 0 - veca | 1 - manja 
 let Zastave: HTMLImageElement[] = []; // 0 - Leva | 1 - Desna
@@ -16,30 +16,8 @@ export let OpenBtn = document.getElementById("BtnPotvrdi");
 export let UserNameInput = document.getElementById("KIme") as HTMLInputElement;
 
 
-window.onload =  async function()
-{ 
-  if(localStorage.getItem("username") == null)
-  modal.style.display = "block";
-  else
-  document.getElementById("UserName").innerHTML = localStorage.getItem("username")
-
-  Igrac = new User();
-  if(localStorage.getItem("HighScore") != null)
-  Igrac.high_score = parseInt(localStorage.getItem("HighScore"));
-
-  
-  let username$= await TakeUserName()
-  username$.subscribe((username: string) => {
-  localStorage.setItem("username", username)
-  if(localStorage.getItem("username") == null)
-  modal.style.display = "block";
-  else
+async function SetElements()
 {
-modal.style.display = "none";
-document.getElementById("UserName").innerHTML = localStorage.getItem("username")
-}
-});
-
   DrzavaNameLabel[0] = document.getElementById("leva_drzava_ime") as HTMLLabelElement;
   DrzavaNameLabel[1] = document.getElementById("desna_drzava_ime") as HTMLLabelElement;
   
@@ -54,23 +32,43 @@ document.getElementById("UserName").innerHTML = localStorage.getItem("username")
 
   BrojPoena[0] = document.getElementById("br_poena") as HTMLLabelElement;
   BrojPoena[1] = document.getElementById("max_poena") as HTMLLabelElement;
-
-  BrojPoena[1].innerHTML = Igrac.high_score.toString();
-
+  
+  Igrac = new User();
   Drzave[0] = new Drzava();
   Drzave[1] = new Drzava();
+}
 
-  for(let i = 0 ; i < Drzave.length; i++)
+
+window.onload =  async function()
+{ 
+  await SetElements()
+  if(localStorage.getItem("username") == null)
+  modal.style.display = "block";
+  else
+  document.getElementById("UserName").innerHTML = localStorage.getItem("username")
+  
+  if(localStorage.getItem("HighScore") != null)
   {
-    do{
-      Drzave[i] = await GetDrzava();
-    }
-    while(Drzave[i].ime == DrzavaNameLabel[0].innerHTML) 
-    DrzavaNameLabel[i].innerHTML = Drzave[i].ime;
-    DrzavaPovLabel[i].innerHTML = FormatPovrsina(Drzave[i].povrsina);
-    Zastave[i].src = Drzave[i].zastava;
+    BrojPoena[1].innerHTML = Igrac.high_score.toString();
+    Igrac.high_score = parseInt(localStorage.getItem("HighScore"));
   }
-  DrzavaPovLabel[1].style.visibility ="hidden";
+  
+
+  let username$= await TakeUserName()
+  username$.subscribe((username: string) => {
+  localStorage.setItem("username", username)
+  if(localStorage.getItem("username") == null)
+  modal.style.display = "block";
+  else
+{
+modal.style.display = "none";
+document.getElementById("UserName").innerHTML = localStorage.getItem("username")
+}
+});
+
+ 
+
+await DrawDrzave(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave);
 
   let $DugmeEvent = SetupButtons(Btns);
 
@@ -114,7 +112,7 @@ document.getElementById("UserName").innerHTML = localStorage.getItem("username")
     BrojPoena[1].innerHTML = Igrac.high_score.toString();
     localStorage.setItem("HighScore",Igrac.high_score.toString());
    }
-   await V();
+   await DrawDrzave(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave);
   }
   
 })
@@ -158,22 +156,31 @@ $DugmeEvent[1].subscribe(async function(){
     BrojPoena[1].innerHTML = Igrac.high_score.toString();
     localStorage.setItem("HighScore",Igrac.high_score.toString());
    }
-   await V();
+   await DrawDrzave(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave);
   }
 });
+
+
+  try{
+    let t = await test();
+    console.log(t);
+    t;
+  }
+  catch(error)
+  {
+    console.log(error);
+  }
 }
 
-async function V()
-{
-  for(let i = 0 ; i < Drzave.length; i++)
-{
-  do{
-    Drzave[i] = await GetDrzava();
-  }
-  while(Drzave[i].ime == DrzavaNameLabel[0].innerHTML)  
-  DrzavaNameLabel[i].innerHTML = Drzave[i].ime;
-  DrzavaPovLabel[i].innerHTML = FormatPovrsina(Drzave[i].povrsina);
-  Zastave[i].src = Drzave[i].zastava;
-}
-DrzavaPovLabel[1].style.visibility ="hidden";
+
+
+
+async function test() {
+  let promise = new Promise(function(resolve,reject){
+    if(Math.round(Math.random()* (7 - 1 + 1) + 1)%2 == 0)     
+      resolve("jeste")  
+     else
+     reject("nije");
+  })
+  return promise;
 }
