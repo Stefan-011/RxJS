@@ -1,5 +1,6 @@
-import { debounceTime, from, fromEvent, merge, Observable } from "rxjs";
+import { debounceTime, filter, from, fromEvent, merge, Observable, of, switchMap } from "rxjs";
 import { environments } from "../environments";
+import {OpenBtn,modal,UserNameInput} from "../index"
 
 export function GetDrzava()
   {
@@ -51,4 +52,11 @@ export function GetDrzava()
     .catch((err) => (console.log(err)))
     );
     
+  }
+  export function TakeUserName()
+  {
+    return fromEvent(OpenBtn,"click").pipe(
+      switchMap(() => of(UserNameInput.value.toString())),
+      filter((Kime:string) => Kime.length > 3)
+    );
   }

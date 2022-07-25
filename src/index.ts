@@ -1,6 +1,6 @@
 import {Drzava} from "./Models/Drzava"
 import {User} from "./Models/User"
-import {GetDrzava, GetNewOne, SetupButtons} from "./Logic/observables"
+import {GetDrzava, GetNewOne, SetupButtons, TakeUserName} from "./Logic/observables"
 import { FormatPovrsina } from "./Logic/utilities";
 
 let Btns: HTMLButtonElement[] = []; // 0 - veca | 1 - manja 
@@ -11,12 +11,22 @@ let BrojPoena: HTMLLabelElement[] = []; // 0 - score | 1 - highscore
 let Drzave:Drzava[] = [];// 0 - Leva | 1 - Desna
 let Igrac:User;
 
+export let modal = document.getElementById("myModal");
+export let OpenBtn = document.getElementById("BtnPotvrdi");
+export let UserNameInput = document.getElementById("KIme") as HTMLInputElement;
 
 
 window.onload =  async function()
 { 
+  modal.style.display = "block";
   Igrac = new User();
-  
+  let username$= await TakeUserName()
+  username$.subscribe((username: string) => {
+  alert("good")
+  localStorage.setItem("username", username)
+  if(localStorage.getItem("username") == null)
+  modal.style.display = "block";
+});
 
   DrzavaNameLabel[0] = document.getElementById("leva_drzava_ime") as HTMLLabelElement;
   DrzavaNameLabel[1] = document.getElementById("desna_drzava_ime") as HTMLLabelElement;
@@ -78,6 +88,7 @@ window.onload =  async function()
      
   }, 1000);
    })
+
   }
   else
   {
@@ -115,8 +126,9 @@ $DugmeEvent[1].subscribe(async function(){
         Zastave[1].src = data[0].zastava;
         DrzavaPovLabel[1].style.visibility ="hidden";
        
-    }, 1000);
+    }, 1000); 
     })
+        
   }
   else
   {
