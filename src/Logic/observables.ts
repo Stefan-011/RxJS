@@ -32,13 +32,6 @@ export function GetDrzava()
     ObsArr[0] = $DugmeEvent1.pipe(debounceTime(500));
     ObsArr[1] = $DugmeEvent2.pipe(debounceTime(500));
     return ObsArr;
-
-    ObsArr[0].subscribe(async function()
-    {
-
-    })
-      
-    
   }
 
   export function GetNewOne(id1:number,id2:number)
@@ -62,8 +55,19 @@ export function GetDrzava()
   }
   export function TakeUserName()
   {
-    return fromEvent(OpenBtn,"click").pipe(
+     let Event = fromEvent(OpenBtn,"click").pipe(
       switchMap(() => of(UserNameInput.value.toString())),
       filter((Kime:string) => Kime.length > 3)
     );
+
+    Event.subscribe((username: string) => {
+      localStorage.setItem("username", username)
+      if(localStorage.getItem("username") == null)
+      modal.style.display = "block";
+      else
+     {
+      modal.style.display = "none";
+      document.getElementById("UserName").innerHTML = localStorage.getItem("username");
+     }
+      })
   }
