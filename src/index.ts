@@ -11,8 +11,13 @@ let BrojPoena: HTMLLabelElement[] = []; // 0 - score | 1 - highscore
 let Drzave:Drzava[] = [];// 0 - Leva | 1 - Desna
 let Igrac:User;
 
+
+
 window.onload =  async function()
 { 
+  Igrac = new User();
+  
+
   DrzavaNameLabel[0] = document.getElementById("leva_drzava_ime") as HTMLLabelElement;
   DrzavaNameLabel[1] = document.getElementById("desna_drzava_ime") as HTMLLabelElement;
   
@@ -49,7 +54,9 @@ window.onload =  async function()
 {
   if(Drzave[1].povrsina >= Drzave[0].povrsina)
   {
+    Igrac.score++;
     alert("tacno");
+    BrojPoena[0].innerHTML = Igrac.score.toString();
     DrzavaPovLabel[1].style.visibility ="visible";
     let PovArr = Drzave
     .filter(item=>item.povrsina > 0)
@@ -75,6 +82,10 @@ window.onload =  async function()
   else
   {
     alert("greska")
+    if(Igrac.score > Igrac.high_score)
+    Igrac.high_score = Igrac.score;
+    BrojPoena[1].innerHTML = Igrac.high_score.toString();
+    BrojPoena[0].innerHTML = "0";
   }
   
 })
@@ -82,7 +93,9 @@ $DugmeEvent[1].subscribe(async function(){
 
     if(Drzave[1].povrsina <= Drzave[0].povrsina)
   {
+    Igrac.score++;
     alert("tacno")
+    BrojPoena[0].innerHTML = Igrac.score.toString();
     DrzavaPovLabel[1].style.visibility ="visible";
     let PovArr = Drzave
     .filter(item=>item.povrsina > 0)
@@ -108,6 +121,10 @@ $DugmeEvent[1].subscribe(async function(){
   else
   {
     alert("greska")
+    if(Igrac.score > Igrac.high_score)
+    Igrac.high_score = Igrac.score;
+    BrojPoena[1].innerHTML = Igrac.high_score.toString();
+    BrojPoena[0].innerHTML = "0";
   }
 });
 }
