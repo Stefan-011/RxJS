@@ -57,10 +57,19 @@ window.onload =  async function()
     let fetchObs = await GetNewOne(PovArr[0],PovArr[1]);
     fetchObs.subscribe((data)=>
    {
-    DrzavaNameLabel[1].innerHTML = data[0].ime;
-    DrzavaPovLabel[1].innerHTML = FormatPovrsina(data[0].povrsina);
-    Zastave[1].src = data[0].zastava;
-    DrzavaPovLabel[1].style.visibility ="hidden";
+    setTimeout(function() {
+      DrzavaNameLabel[0].innerHTML =  DrzavaNameLabel[1].innerHTML
+      DrzavaPovLabel[0].innerHTML = DrzavaPovLabel[1].innerHTML;
+      Zastave[0].src = Zastave[1].src;
+      Drzave[0] = Drzave[1];
+      Drzave[1] = data[0];
+    
+      DrzavaNameLabel[1].innerHTML = data[0].ime;
+      DrzavaPovLabel[1].innerHTML = FormatPovrsina(data[0].povrsina);
+      Zastave[1].src = data[0].zastava;
+      DrzavaPovLabel[1].style.visibility ="hidden";
+     
+  }, 1000);
    })
   }
   else
@@ -81,10 +90,19 @@ $DugmeEvent[1].subscribe(async function(){
     let fetchObs = await GetNewOne(PovArr[0],PovArr[1]);
     fetchObs.subscribe((data)=>
     {
-     DrzavaNameLabel[1].innerHTML = data[0].ime;
-     DrzavaPovLabel[1].innerHTML = FormatPovrsina(data[0].povrsina);
-     Zastave[1].src = data[0].zastava;
-     DrzavaPovLabel[1].style.visibility ="hidden";
+      setTimeout(function() {
+        DrzavaNameLabel[0].innerHTML =  DrzavaNameLabel[1].innerHTML
+        DrzavaPovLabel[0].innerHTML = DrzavaPovLabel[1].innerHTML;
+        Zastave[0].src = Zastave[1].src;
+        Drzave[0] = Drzave[1];
+        Drzave[1] = data[0];
+      
+        DrzavaNameLabel[1].innerHTML = data[0].ime;
+        DrzavaPovLabel[1].innerHTML = FormatPovrsina(data[0].povrsina);
+        Zastave[1].src = data[0].zastava;
+        DrzavaPovLabel[1].style.visibility ="hidden";
+       
+    }, 1000);
     })
   }
   else
