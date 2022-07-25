@@ -18,14 +18,26 @@ export let UserNameInput = document.getElementById("KIme") as HTMLInputElement;
 
 window.onload =  async function()
 { 
+  if(localStorage.getItem("username") == null)
   modal.style.display = "block";
+  else
+  document.getElementById("UserName").innerHTML = localStorage.getItem("username")
+
   Igrac = new User();
+  if(localStorage.getItem("HighScore") != null)
+  Igrac.high_score = parseInt(localStorage.getItem("HighScore"));
+
+  
   let username$= await TakeUserName()
   username$.subscribe((username: string) => {
-  alert("good")
   localStorage.setItem("username", username)
   if(localStorage.getItem("username") == null)
   modal.style.display = "block";
+  else
+{
+modal.style.display = "none";
+document.getElementById("UserName").innerHTML = localStorage.getItem("username")
+}
 });
 
   DrzavaNameLabel[0] = document.getElementById("leva_drzava_ime") as HTMLLabelElement;
@@ -42,6 +54,8 @@ window.onload =  async function()
 
   BrojPoena[0] = document.getElementById("br_poena") as HTMLLabelElement;
   BrojPoena[1] = document.getElementById("max_poena") as HTMLLabelElement;
+
+  BrojPoena[1].innerHTML = Igrac.high_score.toString();
 
   Drzave[0] = new Drzava();
   Drzave[1] = new Drzava();
@@ -93,10 +107,14 @@ window.onload =  async function()
   else
   {
     alert("greska")
+    BrojPoena[0].innerHTML = "0";
     if(Igrac.score > Igrac.high_score)
+   {
     Igrac.high_score = Igrac.score;
     BrojPoena[1].innerHTML = Igrac.high_score.toString();
-    BrojPoena[0].innerHTML = "0";
+    localStorage.setItem("HighScore",Igrac.high_score.toString());
+   }
+   await V();
   }
   
 })
@@ -133,10 +151,29 @@ $DugmeEvent[1].subscribe(async function(){
   else
   {
     alert("greska")
+    BrojPoena[0].innerHTML = "0";
     if(Igrac.score > Igrac.high_score)
+   {
     Igrac.high_score = Igrac.score;
     BrojPoena[1].innerHTML = Igrac.high_score.toString();
-    BrojPoena[0].innerHTML = "0";
+    localStorage.setItem("HighScore",Igrac.high_score.toString());
+   }
+   await V();
   }
 });
+}
+
+async function V()
+{
+  for(let i = 0 ; i < Drzave.length; i++)
+{
+  do{
+    Drzave[i] = await GetDrzava();
+  }
+  while(Drzave[i].ime == DrzavaNameLabel[0].innerHTML)  
+  DrzavaNameLabel[i].innerHTML = Drzave[i].ime;
+  DrzavaPovLabel[i].innerHTML = FormatPovrsina(Drzave[i].povrsina);
+  Zastave[i].src = Drzave[i].zastava;
+}
+DrzavaPovLabel[1].style.visibility ="hidden";
 }
