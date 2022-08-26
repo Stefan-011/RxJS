@@ -47,6 +47,140 @@
         "ime": "Kazakhstan",
         "povrsina":2724900,
         "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/kz.svg"
+      },
+      {
+        "id": 9,
+        "ime": "Srbija",
+        "povrsina":88361,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/rs.svg"
+      },
+      {
+        "id": 10,
+        "ime": "Slovakia",
+        "povrsina":49035,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/sk.svg"
       }
+      ,
+      {
+        "id": 11,
+        "ime": "Slovenia",
+        "povrsina":20273,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/si.svg"
+      }
+      ,
+      {
+        "id": 12,
+        "ime": "Sudan",
+        "povrsina":1886068 ,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/sd.svg"
+      },
+      {
+        "id": 13,
+        "ime": "Pakistan",
+        "povrsina":881913,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/pk.svg"
+      },
+      {
+        "id": 14,
+        "ime": "Kambodza",
+        "povrsina":181035,
+        "zastava":"https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.world-free-printable-flags.com%2Fimages%2Fcambodia.jpg&f=1&nofb=1"
+      }
+      ,
+      {
+        "id": 15,
+        "ime": "Juzna Korea",
+        "povrsina":100363,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/kr.svg"
+      }
+      ,
+      {
+        "id": 16,
+        "ime": "Japan",
+        "povrsina":377972,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/jp.svg"
+      },
+      {
+        "id": 17,
+        "ime": "Republika Irska",
+        "povrsina":70273,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/ie.svg"
+      },
+      {
+        "id": 18,
+        "ime": "Island",
+        "povrsina":102775,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/is.svg"
+      }
+      ,
+      {
+        "id": 19,
+        "ime": "Danska",
+        "povrsina":42933,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/dk.svg"
+      }
+      ,
+      {
+        "id": 20,
+        "ime": "Bosnia i Herzegovina",
+        "povrsina":51129,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/ba.svg"
+      },
+      {
+        "id": 21,
+        "ime": "Hrvatska",
+        "povrsina":56594,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/hr.svg"
+      },
+      {
+        "id": 22,
+        "ime": "Chad",
+        "povrsina":1284000,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/td.svg"
+      },
+      {
+        "id": 23,
+        "ime": "Grcka",
+        "povrsina":131957,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/gr.svg"
+      },
+      {
+        "id": 24,
+        "ime": "Svedska",
+        "povrsina":450295,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/se.svg"
+      }
+      ,
+      {
+        "id": 25,
+        "ime": "Turska",
+        "povrsina":242495,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/tr.svg"
+      } ,
+      {
+        "id": 26,
+        "ime": "Francuska",
+        "povrsina":640679,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/fr.svg"
+      } ,
+      {
+        "id": 27,
+        "ime": "Crna Gora",
+        "povrsina":13812,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/me.svg"
+      } ,
+      {
+        "id": 28,
+        "ime": "Bugarska",
+        "povrsina":110993,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/bg.svg"
+      } ,
+      {
+        "id": 29,
+        "ime": "North Macedonia",
+        "povrsina":25713,
+        "zastava":"https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/mk.svg"
+      }
+
     ]
   }

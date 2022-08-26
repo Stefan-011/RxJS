@@ -1,10 +1,13 @@
 import { debounceTime, filter, from, fromEvent, merge, Observable, of, switchMap } from "rxjs";
+import { OpenBtn,modal,UserNameInput, BrojDrzava } from "../index"
 import { environments } from "../environments";
-import {OpenBtn,modal,UserNameInput} from "../index"
+
 
 export function GetDrzava()
   {
-    let ID = Math.round(Math.random()* (7 - 1 + 1) + 1);
+   
+    const ID = Math.round(Math.random()* ((BrojDrzava-1) - 1 + 1) + 1);
+  //  alert(ID+ "vs" + BrojDrzava )
     return fetch(environments.API_URL+`/Countries/?id=${ID}`)
      .then((data) => {
          if(data.ok)
@@ -18,6 +21,7 @@ export function GetDrzava()
      ); 
   }
   
+
   export function SetupButtons(Btns: HTMLButtonElement[])
   {
     let $DugmeEvent1 = fromEvent(Btns[0],"click");
@@ -28,18 +32,20 @@ export function GetDrzava()
 
     $DugmeEvent1 = merge($DugmeEvent1,$MobileEvent1);
     $DugmeEvent2 = merge($DugmeEvent2,$MobileEvent2);
+
     let ObsArr:Observable<Event> [] = [];
     ObsArr[0] = $DugmeEvent1.pipe(debounceTime(500));
     ObsArr[1] = $DugmeEvent2.pipe(debounceTime(500));
     return ObsArr;
   }
 
+
   export function GetNewOne(id1:number,id2:number)
   {
     let ID = id1;
     while(ID == id1 || ID == id2)
     {
-      ID = Math.round(Math.random()* (7 - 1 + 1) + 1);
+      ID = Math.round(Math.random()* ((BrojDrzava-1) - 1 + 1) + 1);
     }
     
     return from(fetch(environments.API_URL+`/Countries/?id=${ID}`)
@@ -53,6 +59,8 @@ export function GetDrzava()
     );
     
   }
+
+
   export function TakeUserName()
   {
      let Event = fromEvent(OpenBtn,"click").pipe(
@@ -60,7 +68,8 @@ export function GetDrzava()
       filter((Kime:string) => Kime.length > 3)
     );
 
-    Event.subscribe((username: string) => {
+    Event.subscribe((username: string) => 
+    {
       localStorage.setItem("username", username)
       if(localStorage.getItem("username") == null)
       modal.style.display = "block";
@@ -70,4 +79,20 @@ export function GetDrzava()
       document.getElementById("UserName").innerHTML = localStorage.getItem("username");
      }
       })
+  }
+
+
+  export function GetAllDrzave()
+  {
+    return fetch(environments.API_URL+`/Countries/`)
+    .then((data) => {
+        if(data.ok)
+        return data.json();
+        else throw new Error("Drzava nije pronadjena");
+    }        
+    )
+    .then(function(data){
+        return data;
+    }).catch((err) => (console.log(err)) 
+    );
   }

@@ -11799,7 +11799,7 @@ section#contact form#contactForm :-ms-input-placeholder {
 {
   background: #242333; ;
   min-width: 25ch;
-  height: 1000px;
+  height: 130vh;
 }
 
 .playside1-div
@@ -11919,8 +11919,15 @@ float:left;
   margin-left: 32.5%;
   margin-right: 32.5%;
   margin-top: 10%;
-  width: 35%;
-  height: 30%;
+  width: 35vw;
+  height: 40vh;
+}
+
+.modal-content-custom input
+{
+  width: 20vw;
+  height: 5vh;
+  margin-top:5%;
 }
 
 
@@ -11931,6 +11938,8 @@ color: #F1A208 ;
 border-style: solid;
 border-color: #F1A208 ;
 border-width: 2px;
+width: 15vw;
+height: 6vh;
 }
 
 .modal-content-custom button:hover
@@ -11940,7 +11949,6 @@ border-width: 2px;
   border-style: solid;
   border-color: #002A32 ;
   border-width: 2px;
-
 }
 
 .modal-content-custom button:focus
@@ -11954,6 +11962,12 @@ border-width: 2px;
 }
 
 
+
+.stats-div
+{
+  background-color: #242333;
+  color: white;
+}
 
 
 @media screen and (max-width: 715px) {
@@ -11985,7 +11999,6 @@ border-width: 2px;
     .content-region
     { 
       min-width: 25ch;
-      height: 1000px;
     }
     .btn-veca
     {
@@ -12065,6 +12078,7 @@ border-width: 2px;
     {
     font-size: 23px ;
     }
+
   }
 
   @media screen and (width: 768px)
@@ -12098,6 +12112,38 @@ border-width: 2px;
   font-size: 23px ;
   }
   }
+
+  @media screen and (max-width: 912px)
+  {
+    .modal-content-custom button
+  {
+    width: 100%;
+  }
+
+  .modal-content-custom input
+  {
+    width: 100%;
+  }
+
+  .content-region
+  {
+    height: 100vh;
+  }
+  }
+
+  @media screen and (max-width: 280px)
+  {
+    .modal-content-custom 
+  {
+    font-size: 15px;
+  }
+
+
+  }
+
+
+
+  
   
   
 

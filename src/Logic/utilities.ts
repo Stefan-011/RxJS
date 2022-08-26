@@ -1,26 +1,33 @@
 import { Igrac } from "..";
 import { Drzava } from "../Models/Drzava";
-import { GetDrzava, GetNewOne } from "./observables";
+import { GetAllDrzave, GetDrzava, GetNewOne } from "./observables";
+
 
 export function FormatPovrsina(Povrsina:number)
 {
-    let Array1 = Povrsina.toString().split("").reverse();
-    let Array2 = Povrsina.toString().split("");
-    for(let j = 0 ,i = 0 ; i < Array1.length; i++,j++)
+    let UnFormattedReversed = Povrsina.toString().split("").reverse();
+    let ToBeFormatted = Povrsina.toString().split("");
+    for(let j = 0 ,i = 0 ; i < UnFormattedReversed.length; i++,j++)
     {
         if(i!=0 && i%3 == 0)
         {
-            Array2[j] = ".";
-            Array2[j+1] = Array1[i];
+          ToBeFormatted[j] = ".";
+          ToBeFormatted[j+1] = UnFormattedReversed[i];
             j++;    
         }
         else
-            Array2[j] = Array1[i];   
+        ToBeFormatted[j] = UnFormattedReversed[i];   
     }
-    return Array2.reverse().toString().replace(/,/gi,"")+" km²";
+    return ToBeFormatted.reverse().toString().replace(/,/gi,"")+" km²";
 }
 
-export async function DrawDrzave(Drzave:Drzava[],DrzavaNameLabel:HTMLLabelElement[],DrzavaPovLabel:HTMLLabelElement[],Zastave:HTMLImageElement[])
+
+export async function DrawDrzave(
+  Drzave:Drzava[],
+  DrzavaNameLabel:HTMLLabelElement[],
+  DrzavaPovLabel:HTMLLabelElement[],
+  Zastave:HTMLImageElement[],
+  )
 {
     for(let i = 0 ; i < Drzave.length; i++)
     {
@@ -28,23 +35,32 @@ export async function DrawDrzave(Drzave:Drzava[],DrzavaNameLabel:HTMLLabelElemen
         Drzave[i] = await GetDrzava();
       }
       while(Drzave[i].ime == DrzavaNameLabel[0].innerHTML) 
+ 
       DrzavaNameLabel[i].innerHTML = Drzave[i].ime;
       DrzavaPovLabel[i].innerHTML = FormatPovrsina(Drzave[i].povrsina);
       Zastave[i].src = Drzave[i].zastava;
     }
-    DrzavaPovLabel[1].style.visibility ="hidden";
-    console.log("wat")
+    DrzavaPovLabel[DrzavaPovLabel.length-1].style.visibility = "hidden";
 }
-export function TacanSlucaj(Drzave:Drzava[],DrzavaNameLabel:HTMLLabelElement[],DrzavaPovLabel:HTMLLabelElement[],Zastave:HTMLImageElement[],BrojPoena:HTMLLabelElement[])
+
+
+export function TacanSlucaj(
+  Drzave:Drzava[],
+  DrzavaNameLabel:HTMLLabelElement[],
+  DrzavaPovLabel:HTMLLabelElement[],
+  Zastave:HTMLImageElement[],
+  BrojPoena:HTMLLabelElement[]
+  )
 {
   Igrac.score++;
   BrojPoena[0].innerHTML = Igrac.score.toString();
   DrzavaPovLabel[1].style.visibility ="visible";
 
-  let PovArr = Drzave
+  const PovArr = Drzave
   .filter(item=>item.povrsina > 0)
   .map(item=>item.id);
-  let fetchObs =  GetNewOne(PovArr[0],PovArr[1]);
+
+  const fetchObs =  GetNewOne(PovArr[0],PovArr[1]);
   fetchObs.subscribe((data)=>
   {
     setTimeout(function() {
@@ -58,34 +74,57 @@ export function TacanSlucaj(Drzave:Drzava[],DrzavaNameLabel:HTMLLabelElement[],D
       DrzavaPovLabel[1].innerHTML = FormatPovrsina(data[0].povrsina);
       Zastave[1].src = data[0].zastava;
       DrzavaPovLabel[1].style.visibility ="hidden";
-     
-  }, 1000); 
+     }, 1000); 
   })
 }
 
-export function NetacanSlucaj(Drzave:Drzava[],DrzavaNameLabel:HTMLLabelElement[],DrzavaPovLabel:HTMLLabelElement[],Zastave:HTMLImageElement[],BrojPoena:HTMLLabelElement[])
+
+export function NetacanSlucaj(
+  Drzave:Drzava[],
+  DrzavaNameLabel:HTMLLabelElement[],
+  DrzavaPovLabel:HTMLLabelElement[],
+  Zastave:HTMLImageElement[],
+  BrojPoena:HTMLLabelElement[]
+  )
 {
   if(Igrac.score > Igrac.high_score)
-      {
-       Igrac.high_score = Igrac.score;
-       BrojPoena[1].innerHTML = Igrac.high_score.toString();
-       localStorage.setItem("HighScore",Igrac.high_score.toString());
-      }
-      Igrac.score = 0;
-      BrojPoena[0].innerHTML = Igrac.score.toString();
-      DrawDrzave(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave);
+    {
+      Igrac.high_score = Igrac.score;
+      BrojPoena[1].innerHTML = Igrac.high_score.toString();
+      localStorage.setItem("HighScore",Igrac.high_score.toString());
+    }
+    Igrac.score = 0;
+    BrojPoena[0].innerHTML = Igrac.score.toString();
+    DrawDrzave(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave);
 }
 
-export async function SolveProblem(Left:number,Right:number,Drzave:Drzava[],DrzavaNameLabel:HTMLLabelElement[],DrzavaPovLabel:HTMLLabelElement[],Zastave:HTMLImageElement[],BrojPoena:HTMLLabelElement[] ) {
-    let promise = new Promise(function(resolve,reject){
+
+export async function SolveProblem(
+  Left:number,
+  Right:number,
+  Drzave:Drzava[],
+  DrzavaNameLabel:HTMLLabelElement[],
+  DrzavaPovLabel:HTMLLabelElement[],
+  Zastave:HTMLImageElement[],
+  BrojPoena:HTMLLabelElement[] 
+  )
+  {
+    let Result = new Promise(function(resolve,reject){
       if(Left >= Right)     
         resolve(TacanSlucaj(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave,BrojPoena))  
        else
        {
-         alert("greska")
+        alert("Pogresli ste !!!")
         reject(NetacanSlucaj(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave,BrojPoena));
        }
-       
     })
-    return promise;
+    return Result;
+  }
+
+  
+  export async function GetNumberOfCountries()
+  {
+    let AllDrzave:Drzava[] = [];
+    AllDrzave = await GetAllDrzave();
+    return AllDrzave.length;
   }

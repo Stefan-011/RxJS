@@ -1,22 +1,22 @@
-import {Drzava} from "./Models/Drzava"
-import {User} from "./Models/User"
-import {GetDrzava, GetNewOne, SetupButtons, TakeUserName} from "./Logic/observables"
-import { DrawDrzave, FormatPovrsina,NetacanSlucaj,SolveProblem,TacanSlucaj} from "./Logic/utilities";
-import { fromEvent } from "rxjs";
+import { DrawDrzave,GetNumberOfCountries,SolveProblem } from "./Logic/utilities";
+import { SetupButtons, TakeUserName } from "./Logic/observables"
+import { Drzava } from "./Models/Drzava"
+import { User } from "./Models/User"
 
-let Btns: HTMLButtonElement[] = []; // 0 - veca | 1 - manja 
-let Zastave: HTMLImageElement[] = []; // 0 - Leva | 1 - Desna
-let DrzavaNameLabel: HTMLLabelElement[] = []; // 0 - Leva | 1 - Desna
-let DrzavaPovLabel: HTMLLabelElement[] = []; // 0 - Leva | 1 - Desna
-let BrojPoena: HTMLLabelElement[] = []; // 0 - score | 1 - highscore
-let Drzave:Drzava[] = [];// 0 - Leva | 1 - Desna
+const DrzavaNameLabel: HTMLLabelElement[] = []; 
+const DrzavaPovLabel: HTMLLabelElement[] = []; 
+const BrojPoena: HTMLLabelElement[] = []; 
+const Zastave: HTMLImageElement[] = []; 
+const Btns: HTMLButtonElement[] = [];
+const Drzave:Drzava[] = [];
+
+export let BrojDrzava:number;
 export let Igrac:User;
-
-export let modal = document.getElementById("myModal");
 export let OpenBtn:HTMLButtonElement;
 export let UserNameInput:HTMLInputElement;
+export let modal = document.getElementById("myModal");
 
-// Funkcija za postavljanje elemenata
+
 function SetElements()
 {
   DrzavaNameLabel[0] = document.getElementById("leva_drzava_ime") as HTMLLabelElement;
@@ -39,20 +39,27 @@ function SetElements()
   
   for(let i = 0 ; i < 2; i++ )
   {
-    Drzave[i] = new Drzava();
+    let NewDrzava:Drzava
+    Drzave[i] = NewDrzava;
   }
 
-  Igrac = new User();
+  Igrac = {
+    score:0,
+    high_score:0
+  }
 }
 
 
-// Funkcija za postavljanje podataka iz localstorage-a
 function SetData()
 {
   if(localStorage.getItem("username") == null)
-  modal.style.display = "block";
+  {
+    TakeUserName();
+    modal.style.display = "block";
+    localStorage.clear();
+  }
   else
-  document.getElementById("UserName").innerHTML = localStorage.getItem("username")
+  document.getElementById("UserName").innerHTML = localStorage.getItem("username");
   
   if(localStorage.getItem("HighScore") != null)
   {
@@ -62,22 +69,44 @@ function SetData()
 }
 
 
-
 window.onload =  async function()
 { 
+   BrojDrzava = await GetNumberOfCountries();
    SetElements()
    SetData();
-   TakeUserName();
-   DrawDrzave(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave);
+   DrawDrzave(
+     Drzave,
+     DrzavaNameLabel,
+     DrzavaPovLabel,
+     Zastave
+     );
 
-  let $DugmeEvent = SetupButtons(Btns);
+   let $DugmeEvent = SetupButtons(Btns);
+
   $DugmeEvent[0].subscribe(async function()
-{
-  await SolveProblem(Drzave[1].povrsina,Drzave[0].povrsina,Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave,BrojPoena)
-})
-$DugmeEvent[1].subscribe(async function()
-{ 
-  await SolveProblem(Drzave[0].povrsina,Drzave[1].povrsina,Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave,BrojPoena)
-});
+    {
+      await SolveProblem(
+        Drzave[1].povrsina,
+        Drzave[0].povrsina,
+        Drzave,
+        DrzavaNameLabel,
+        DrzavaPovLabel,
+        Zastave,
+        BrojPoena
+        );
+    })
+
+  $DugmeEvent[1].subscribe(async function()
+    { 
+      await SolveProblem(
+        Drzave[0].povrsina,
+        Drzave[1].povrsina,
+        Drzave,
+        DrzavaNameLabel,
+        DrzavaPovLabel,
+        Zastave,
+        BrojPoena
+        );
+    });
 
 }
