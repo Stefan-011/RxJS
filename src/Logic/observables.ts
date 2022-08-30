@@ -7,7 +7,6 @@ export function GetDrzava()
   {
    
     const ID = Math.round(Math.random()* ((BrojDrzava-1) - 1 + 1) + 1);
-  //  alert(ID+ "vs" + BrojDrzava )
     return fetch(environments.API_URL+`/Countries/?id=${ID}`)
      .then((data) => {
          if(data.ok)
