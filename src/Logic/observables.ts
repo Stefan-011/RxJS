@@ -1,9 +1,8 @@
 import { debounceTime, filter, from, fromEvent, merge, Observable, of, switchMap } from "rxjs";
-import { OpenBtn,modal,UserNameInput, BrojDrzava } from "../index"
 import { environments } from "../environments";
+import { SideEnum } from "../Enums/SideEnum";
 
-
-export function GetDrzava()
+export function GetDrzava(BrojDrzava:number)
   {
    
     const ID = Math.round(Math.random()* ((BrojDrzava-1) - 1 + 1) + 1);
@@ -23,8 +22,8 @@ export function GetDrzava()
 
   export function SetupButtons(Btns: HTMLButtonElement[])
   {
-    let $DugmeEvent1 = fromEvent(Btns[0],"click");
-    let $DugmeEvent2 = fromEvent(Btns[1],"click");
+    let $DugmeEvent1 = fromEvent(Btns[SideEnum.Veca],"click");
+    let $DugmeEvent2 = fromEvent(Btns[SideEnum.Manja],"click");
 
     let $MobileEvent1= fromEvent(document.getElementById("desna_drzava_zastava") as HTMLDivElement,"click");
     let $MobileEvent2 = fromEvent(document.getElementById("leva_drzava_zastava") as HTMLDivElement,"click");
@@ -39,7 +38,7 @@ export function GetDrzava()
   }
 
 
-  export function GetNewOne(id1:number,id2:number)
+  export function GetNewOne(id1:number,id2:number,BrojDrzava:number)
   {
     let ID = id1;
     while(ID == id1 || ID == id2)
@@ -60,10 +59,10 @@ export function GetDrzava()
   }
 
 
-  export function TakeUserName()
+  export function TakeUserName(Input:HTMLInputElement,SubmitButton:HTMLButtonElement,ActiveModal:HTMLElement)
   {
-     let Event = fromEvent(OpenBtn,"click").pipe(
-      switchMap(() => of(UserNameInput.value.toString())),
+     let Event = fromEvent(SubmitButton,"click").pipe(
+      switchMap(() => of(Input.value.toString())),
       filter((Kime:string) => Kime.length > 3)
     );
 
@@ -71,10 +70,10 @@ export function GetDrzava()
     {
       localStorage.setItem("username", username)
       if(localStorage.getItem("username") == null)
-      modal.style.display = "block";
+      ActiveModal.style.display = "block";
       else
      {
-      modal.style.display = "none";
+      ActiveModal.style.display = "none";
       document.getElementById("UserName").innerHTML = localStorage.getItem("username");
      }
       })

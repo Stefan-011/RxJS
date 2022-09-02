@@ -1,5 +1,5 @@
-import { Igrac } from "..";
 import { Drzava } from "../Models/Drzava";
+import { User } from "../Models/User";
 import { GetAllDrzave, GetDrzava, GetNewOne } from "./observables";
 
 
@@ -27,12 +27,13 @@ export async function DrawDrzave(
   DrzavaNameLabel:HTMLLabelElement[],
   DrzavaPovLabel:HTMLLabelElement[],
   Zastave:HTMLImageElement[],
+  BrojDrzava:number
   )
 {
     for(let i = 0 ; i < Drzave.length; i++)
     {
       do{
-        Drzave[i] = await GetDrzava();
+        Drzave[i] = await GetDrzava(BrojDrzava);
       }
       while(Drzave[i].ime == DrzavaNameLabel[0].innerHTML) 
  
@@ -49,7 +50,9 @@ export function TacanSlucaj(
   DrzavaNameLabel:HTMLLabelElement[],
   DrzavaPovLabel:HTMLLabelElement[],
   Zastave:HTMLImageElement[],
-  BrojPoena:HTMLLabelElement[]
+  BrojPoena:HTMLLabelElement[],
+  BrojDrzava:number,
+  Igrac:User
   )
 {
   Igrac.score++;
@@ -60,7 +63,7 @@ export function TacanSlucaj(
   .filter(item=>item.povrsina > 0)
   .map(item=>item.id);
 
-  const fetchObs =  GetNewOne(PovArr[0],PovArr[1]);
+  const fetchObs =  GetNewOne(PovArr[0],PovArr[1],BrojDrzava);
   fetchObs.subscribe((data)=>
   {
     setTimeout(function() {
@@ -84,7 +87,9 @@ export function NetacanSlucaj(
   DrzavaNameLabel:HTMLLabelElement[],
   DrzavaPovLabel:HTMLLabelElement[],
   Zastave:HTMLImageElement[],
-  BrojPoena:HTMLLabelElement[]
+  BrojPoena:HTMLLabelElement[],
+  BrojDrzava:number,
+  Igrac:User
   )
 {
   if(Igrac.score > Igrac.high_score)
@@ -95,10 +100,10 @@ export function NetacanSlucaj(
     }
     Igrac.score = 0;
     BrojPoena[0].innerHTML = Igrac.score.toString();
-    DrawDrzave(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave);
+    DrawDrzave(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave,BrojDrzava);
 }
 
-
+// Izbaciti promise
 export async function SolveProblem(
   Left:number,
   Right:number,
@@ -106,16 +111,18 @@ export async function SolveProblem(
   DrzavaNameLabel:HTMLLabelElement[],
   DrzavaPovLabel:HTMLLabelElement[],
   Zastave:HTMLImageElement[],
-  BrojPoena:HTMLLabelElement[] 
+  BrojPoena:HTMLLabelElement[],
+  BrojDrzava:number,
+  Igrac:User
   )
   {
-    let Result = new Promise(function(resolve,reject){
+    let Result = new Promise(function(resolve,reject){ // Izmeni
       if(Left >= Right)     
-        resolve(TacanSlucaj(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave,BrojPoena))  
+        resolve(TacanSlucaj(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave,BrojPoena,BrojDrzava,Igrac))  
        else
        {
         alert("Pogresli ste !!!")
-        reject(NetacanSlucaj(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave,BrojPoena));
+        reject(NetacanSlucaj(Drzave,DrzavaNameLabel,DrzavaPovLabel,Zastave,BrojPoena,BrojDrzava,Igrac));
        }
     })
     return Result;
