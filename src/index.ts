@@ -19,11 +19,18 @@ const Zastave: HTMLImageElement[] = [];
 const Btns: HTMLButtonElement[] = [];
 const Drzave: Drzava[] = [];
 
-let UserNameInput: HTMLInputElement;
-let SubmitButton: HTMLButtonElement;
-let BrojDrzava: number;
-let ActiveModal: HTMLElement;
+const UserNameInput: HTMLInputElement = document.getElementById(
+  "KIme"
+) as HTMLInputElement;
+
+const SubmitButton: HTMLButtonElement = document.getElementById(
+  "BtnPotvrdi"
+) as HTMLButtonElement;
+
+const ActiveModal: HTMLElement = document.getElementById("myModal");
+
 let Igrac: User;
+let BrojDrzava: number;
 
 async function SetElements() {
   DrzavaNameLabel[Side.Leva] = document.getElementById(
@@ -66,13 +73,7 @@ async function SetElements() {
     "max_poena"
   ) as HTMLLabelElement;
 
-  SubmitButton = document.getElementById("BtnPotvrdi") as HTMLButtonElement;
-
-  UserNameInput = document.getElementById("KIme") as HTMLInputElement;
-
   BrojDrzava = await GetNumberOfCountries();
-
-  ActiveModal = document.getElementById("myModal");
 
   for (let i = 0; i < BROJ_AKTIVNIH_DRZAVA; i++) {
     let NewDrzava: Drzava;
