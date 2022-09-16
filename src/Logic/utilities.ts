@@ -7,14 +7,14 @@ import { GetAllDrzave, GetDrzava, GetNewOne } from "./observables";
 
 export function FormatPovrsina(Povrsina: number) {
   let UnFormattedReversed = Povrsina.toString().split("").reverse();
-  let ToBeFormatted = Povrsina.toString().split("");
-  for (let j = 0, i = 0; i < UnFormattedReversed.length; i++, j++) {
+  let ToBeFormatted: string[] = [];
+  for (let i = 0; i < UnFormattedReversed.length; i++) {
     if (i != 0 && i % 3 == 0) {
-      ToBeFormatted[j] = ".";
-      ToBeFormatted[j + 1] = UnFormattedReversed[i];
-      j++;
-    } else ToBeFormatted[j] = UnFormattedReversed[i];
+      ToBeFormatted.push(".");
+      ToBeFormatted.push(UnFormattedReversed[i]);
+    } else ToBeFormatted.push(UnFormattedReversed[i]);
   }
+
   return ToBeFormatted.reverse().toString().replace(/,/gi, "") + " km²";
 }
 
@@ -79,17 +79,18 @@ export function StopAndRestart(
   DrzavaNameLabel: HTMLLabelElement[],
   DrzavaPovLabel: HTMLLabelElement[],
   Zastave: HTMLImageElement[],
-  BrojPoena: HTMLLabelElement[],
+  BrojPoenaLabel: HTMLLabelElement[],
   BrojDrzava: number,
   Igrac: User
 ) {
   if (Igrac.score > Igrac.high_score) {
     Igrac.high_score = Igrac.score;
-    BrojPoena[1].innerHTML = Igrac.high_score.toString();
+    BrojPoenaLabel[BrojPoena.Maksimalni].innerHTML =
+      Igrac.high_score.toString();
     localStorage.setItem("HighScore", Igrac.high_score.toString());
   }
   Igrac.score = 0;
-  BrojPoena[0].innerHTML = Igrac.score.toString();
+  BrojPoenaLabel[BrojPoena.Trenutni].innerHTML = Igrac.score.toString();
   DrawDrzave(Drzave, DrzavaNameLabel, DrzavaPovLabel, Zastave, BrojDrzava);
 }
 
@@ -103,9 +104,12 @@ export function SolveProblem(
   BrojPoena: HTMLLabelElement[],
   BrojDrzava: number,
   Igrac: User,
-  ButtonActivated: ButtonType
+  ButtonActivated: ButtonType,
+  Btns: HTMLButtonElement[]
 ) {
   DrzavaPovLabel[Side.Desna].style.visibility = "visible";
+  Btns[ButtonType.Manja].hidden = true;
+  Btns[ButtonType.Veca].hidden = true;
   switch (ButtonActivated) {
     case ButtonType.Veca:
       if (Right >= Left)
@@ -119,7 +123,8 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-        }, 1000);
+          EnableButtons(Btns);
+        }, 1500);
       else {
         alert("Pogresli ste !!!");
         setTimeout(() => {
@@ -132,7 +137,8 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-        }, 1000);
+          EnableButtons(Btns);
+        }, 1500);
       }
 
       break;
@@ -148,6 +154,7 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
+          EnableButtons(Btns);
         }, 1500);
       else {
         alert("Pogresli ste !!!");
@@ -161,6 +168,7 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
+          EnableButtons(Btns);
         }, 1500);
 
         break;
@@ -172,4 +180,8 @@ export async function GetNumberOfCountries() {
   let DrzaveList: Drzava[] = [];
   DrzaveList = await GetAllDrzave();
   return DrzaveList.length;
+}
+
+function EnableButtons(BtnList: HTMLButtonElement[]) {
+  BtnList.forEach((Button) => (Button.hidden = false));
 }

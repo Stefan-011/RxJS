@@ -87,21 +87,18 @@ async function SetElements() {
 
 function SetData() {
   if (localStorage.getItem("username") == null) {
+    localStorage.clear();
+    ActiveModal.style.display = "block";
     const InputObs$ = TakeUserName(UserNameInput, SubmitButton);
 
     InputObs$.subscribe((username: string) => {
       localStorage.setItem("username", username);
-      if (localStorage.getItem("username") == null)
-        ActiveModal.style.display = "block";
-      else {
+      if (localStorage.getItem("username") != null) {
         ActiveModal.style.display = "none";
         document.getElementById("UserName").innerHTML =
           localStorage.getItem("username");
       }
     });
-
-    ActiveModal.style.display = "block";
-    localStorage.clear();
   } else
     document.getElementById("UserName").innerHTML =
       localStorage.getItem("username");
@@ -117,7 +114,6 @@ window.onload = async function () {
   await SetElements();
   SetData();
   DrawDrzave(Drzave, DrzavaNameLabel, DrzavaPovLabel, Zastave, BrojDrzava);
-
   let $DugmeEvent = SetupButtons(Btns);
 
   $DugmeEvent[ButtonType.Veca].subscribe(async function () {
@@ -131,7 +127,8 @@ window.onload = async function () {
       BrojPoenaLabel,
       BrojDrzava,
       Igrac,
-      ButtonType.Veca
+      ButtonType.Veca,
+      Btns
     );
   });
 
@@ -146,7 +143,8 @@ window.onload = async function () {
       BrojPoenaLabel,
       BrojDrzava,
       Igrac,
-      ButtonType.Manja
+      ButtonType.Manja,
+      Btns
     );
   });
 };
