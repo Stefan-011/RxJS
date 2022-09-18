@@ -110,10 +110,10 @@ export function SolveProblem(
   DrzavaPovLabel[Side.Desna].style.visibility = "visible";
   Btns[ButtonType.Manja].hidden = true;
   Btns[ButtonType.Veca].hidden = true;
-  switch (ButtonActivated) {
-    case ButtonType.Veca:
-      if (Right >= Left)
-        setTimeout(() => {
+  setTimeout(() => {
+    switch (ButtonActivated) {
+      case ButtonType.Veca:
+        if (Right >= Left) {
           ContinueGame(
             Drzave,
             DrzavaNameLabel,
@@ -124,10 +124,8 @@ export function SolveProblem(
             Igrac
           );
           EnableButtons(Btns);
-        }, 1500);
-      else {
-        alert("Pogresli ste !!!");
-        setTimeout(() => {
+        } else {
+          alert("Pogresli ste !!!");
           StopAndRestart(
             Drzave,
             DrzavaNameLabel,
@@ -138,42 +136,39 @@ export function SolveProblem(
             Igrac
           );
           EnableButtons(Btns);
-        }, 1500);
-      }
-
-      break;
-    case ButtonType.Manja:
-      if (Right <= Left)
-        setTimeout(() => {
-          ContinueGame(
-            Drzave,
-            DrzavaNameLabel,
-            DrzavaPovLabel,
-            Zastave,
-            BrojPoena,
-            BrojDrzava,
-            Igrac
-          );
-          EnableButtons(Btns);
-        }, 1500);
-      else {
-        alert("Pogresli ste !!!");
-        setTimeout(() => {
-          StopAndRestart(
-            Drzave,
-            DrzavaNameLabel,
-            DrzavaPovLabel,
-            Zastave,
-            BrojPoena,
-            BrojDrzava,
-            Igrac
-          );
-          EnableButtons(Btns);
-        }, 1500);
+        }
 
         break;
-      }
-  }
+      case ButtonType.Manja:
+        if (Right <= Left) {
+          ContinueGame(
+            Drzave,
+            DrzavaNameLabel,
+            DrzavaPovLabel,
+            Zastave,
+            BrojPoena,
+            BrojDrzava,
+            Igrac
+          );
+          EnableButtons(Btns);
+        } else {
+          alert("Pogresli ste !!!");
+
+          StopAndRestart(
+            Drzave,
+            DrzavaNameLabel,
+            DrzavaPovLabel,
+            Zastave,
+            BrojPoena,
+            BrojDrzava,
+            Igrac
+          );
+          EnableButtons(Btns);
+
+          break;
+        }
+    }
+  }, 1500);
 }
 
 export async function GetNumberOfCountries() {
