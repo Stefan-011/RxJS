@@ -59,7 +59,7 @@ export function ContinueGame(
     BrojDrzava
   );
 
-  fetchObs.subscribe((NewDrzava) => {
+  fetchObs.subscribe((NewDrzava: Drzava) => {
     DrzavaNameLabel[Side.Leva].innerHTML =
       DrzavaNameLabel[Side.Desna].innerHTML;
     DrzavaPovLabel[Side.Leva].innerHTML = DrzavaPovLabel[Side.Desna].innerHTML;
