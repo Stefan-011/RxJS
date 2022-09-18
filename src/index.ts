@@ -9,8 +9,11 @@ import { User } from "./Models/User";
 import { Side } from "./Enums/SideEnum";
 import { BrojPoena } from "./Enums/BrojPoenaEnum";
 import { ButtonType } from "./Enums/ButtonEnum";
+import { Subject, takeUntil } from "rxjs";
 
 export const BROJ_AKTIVNIH_DRZAVA = 2;
+
+const Unsubscribe$: Subject<void> = new Subject<void>();
 
 const DrzavaNameLabel: HTMLLabelElement[] = [];
 const DrzavaPovLabel: HTMLLabelElement[] = [];
@@ -92,12 +95,14 @@ function SetData() {
     ActiveModal.style.display = "block";
     const InputObs$ = TakeUserName(UserNameInput, SubmitButton);
 
-    InputObs$.subscribe((username: string) => {
+    InputObs$.pipe(takeUntil(Unsubscribe$)).subscribe((username: string) => {
       localStorage.setItem("username", username);
       if (localStorage.getItem("username") != null) {
         ActiveModal.style.display = "none";
         document.getElementById("UserName").innerHTML =
           localStorage.getItem("username");
+        Unsubscribe$.next();
+        Unsubscribe$.complete();
       }
     });
   } else

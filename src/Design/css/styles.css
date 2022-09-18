@@ -12251,7 +12251,7 @@ section#contact form#contactForm :-ms-input-placeholder {
 }
 
 .linija {
-  width: fit-content;
+  width: 6%;
   height: 100%;
   float: right;
   background-color: none;
@@ -12267,6 +12267,7 @@ section#contact form#contactForm :-ms-input-placeholder {
   border-radius: 50px;
   font-size: 2.2vw;
   padding: 5px 10px;
+  cursor: default;
 }
 
 .linija span:hover {
