@@ -12375,6 +12375,47 @@ section#contact form#contactForm :-ms-input-placeholder {
   border-bottom: 2px white solid;
 }
 
+.modal-content-custom-Msg {
+  background-color: #2d2b3f;
+  color: #f1a208;
+  margin-left: 40.5%;
+  margin-right: 40.5%;
+  margin-top: 10%;
+  width: fit-content;
+  height: fit-content;
+  font-size: 3vh;
+  padding: 0 2vw;
+  border: 2px solid #f1a208;
+}
+
+.modal-content-custom-Msg button {
+  background-color: #2d2b3f !important;
+  color: #f1a208;
+  border-style: solid;
+  border-color: #f1a208;
+  border-width: 2px;
+  width: fit-content;
+  height: fit-content;
+  border: 2px solid #f1a208;
+}
+
+.modal-content-custom-Msg button:hover {
+  background-color: #f1a208 !important;
+  color: #2d2b3f;
+  border-style: solid;
+  border-color: #002a32;
+  border-width: 2px;
+}
+
+.modal-content-custom-Msg button:focus {
+  background-color: #2d2b3f !important;
+  color: #f1a208;
+  border-style: solid;
+  border-color: #f1a208;
+  border-width: 2px;
+  box-shadow: 0 0 8px #f1a208;
+}
+
 @media screen and (max-width: 715px) {
   .content-region {
     min-width: 25ch;
@@ -12428,6 +12469,18 @@ section#contact form#contactForm :-ms-input-placeholder {
   .modal-content-custom button {
     font-size: 17px;
   }
+
+  .modal-content-custom-Msg {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 40%;
+    width: 100%;
+    font-size: 25px;
+  }
+  .modal-content-custom-Msg button {
+    font-size: 17px;
+    width: fit-content;
+  }
 }
 
 @media screen and (width: 912px) {
@@ -12440,6 +12493,9 @@ section#contact form#contactForm :-ms-input-placeholder {
   }
   .modal-content-custom button {
     font-size: 23px;
+  }
+  .modal-content-custom-Msg {
+    width: 100%;
   }
 }
 
@@ -12513,6 +12569,11 @@ section#contact form#contactForm :-ms-input-placeholder {
   }
   .h2-custom {
     font-size: 4vh;
+  }
+  .modal-content-custom-Msg {
+    width: 80%;
+    margin: 16vh 0;
+    margin: 50% 10%;
   }
 }
 

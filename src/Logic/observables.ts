@@ -79,6 +79,10 @@ export function TakeUserName(
   );
 }
 
+export function CloseMessage(SubmitButton: HTMLButtonElement) {
+  return fromEvent(SubmitButton, "click");
+}
+
 export function GetAllDrzave() {
   return fetch(environments.API_URL + `/Countries/`)
     .then((Drzave_Package) => {

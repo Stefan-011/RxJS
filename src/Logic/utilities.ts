@@ -105,15 +105,15 @@ export function SolveProblem(
   BrojDrzava: number,
   Igrac: User,
   ButtonActivated: ButtonType,
-  Btns: HTMLButtonElement[]
+  Btns: HTMLButtonElement[],
+  MsgModal: HTMLElement
 ) {
   DrzavaPovLabel[Side.Desna].style.visibility = "visible";
-  Btns[ButtonType.Manja].hidden = true;
-  Btns[ButtonType.Veca].hidden = true;
+  EnableorDisableButtons(Btns);
   setTimeout(() => {
     switch (ButtonActivated) {
       case ButtonType.Veca:
-        if (Right >= Left) {
+        if (Left <= Right) {
           ContinueGame(
             Drzave,
             DrzavaNameLabel,
@@ -123,9 +123,9 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-          EnableButtons(Btns);
+          EnableorDisableButtons(Btns);
         } else {
-          alert("Pogresli ste !!!");
+          MsgModal.style.display = "block";
           StopAndRestart(
             Drzave,
             DrzavaNameLabel,
@@ -135,12 +135,12 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-          EnableButtons(Btns);
+          EnableorDisableButtons(Btns);
         }
 
         break;
       case ButtonType.Manja:
-        if (Right <= Left) {
+        if (Left >= Right) {
           ContinueGame(
             Drzave,
             DrzavaNameLabel,
@@ -150,10 +150,9 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-          EnableButtons(Btns);
+          EnableorDisableButtons(Btns);
         } else {
-          alert("Pogresli ste !!!");
-
+          MsgModal.style.display = "block";
           StopAndRestart(
             Drzave,
             DrzavaNameLabel,
@@ -163,7 +162,7 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-          EnableButtons(Btns);
+          EnableorDisableButtons(Btns);
 
           break;
         }
@@ -177,6 +176,6 @@ export async function GetNumberOfCountries() {
   return DrzaveList.length;
 }
 
-function EnableButtons(BtnList: HTMLButtonElement[]) {
-  BtnList.forEach((Button) => (Button.hidden = false));
+function EnableorDisableButtons(BtnList: HTMLButtonElement[]) {
+  BtnList.forEach((Button) => (Button.hidden = !Button.hidden));
 }

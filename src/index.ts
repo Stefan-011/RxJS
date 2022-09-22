@@ -3,7 +3,7 @@ import {
   GetNumberOfCountries,
   SolveProblem,
 } from "./Logic/utilities";
-import { SetupButtons, TakeUserName } from "./Logic/observables";
+import { CloseMessage, SetupButtons, TakeUserName } from "./Logic/observables";
 import { Drzava } from "./Models/Drzava";
 import { User } from "./Models/User";
 import { Side } from "./Enums/SideEnum";
@@ -30,7 +30,13 @@ const SubmitButton: HTMLButtonElement = document.getElementById(
   "BtnPotvrdi"
 ) as HTMLButtonElement;
 
+const SubmitButtonForMsg: HTMLButtonElement = document.getElementById(
+  "BtnPotvrdiMsg"
+) as HTMLButtonElement;
+
 const ActiveModal: HTMLElement = document.getElementById("myModal");
+
+const MsgModal: HTMLElement = document.getElementById("myModalMsg");
 
 let Igrac: User;
 let BrojDrzava: number;
@@ -90,6 +96,7 @@ async function SetElements() {
 }
 
 function SetData() {
+  MsgModal.style.display = "none";
   if (localStorage.getItem("username") == null) {
     localStorage.clear();
     ActiveModal.style.display = "block";
@@ -114,6 +121,10 @@ function SetData() {
     BrojPoenaLabel[BrojPoena.Maksimalni].innerHTML =
       Igrac.high_score.toString();
   }
+  const MessageSubmitButtonObs$ = CloseMessage(SubmitButtonForMsg);
+  MessageSubmitButtonObs$.pipe().subscribe(() => {
+    MsgModal.style.display = "none";
+  });
 }
 
 window.onload = async function () {
@@ -134,7 +145,8 @@ window.onload = async function () {
       BrojDrzava,
       Igrac,
       ButtonType.Veca,
-      Btns
+      Btns,
+      MsgModal
     );
   });
 
@@ -150,7 +162,8 @@ window.onload = async function () {
       BrojDrzava,
       Igrac,
       ButtonType.Manja,
-      Btns
+      Btns,
+      MsgModal
     );
   });
 };
