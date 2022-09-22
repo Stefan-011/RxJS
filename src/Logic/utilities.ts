@@ -109,7 +109,7 @@ export function SolveProblem(
   MsgModal: HTMLElement
 ) {
   DrzavaPovLabel[Side.Desna].style.visibility = "visible";
-  EnableorDisableButtons(Btns);
+  EnableOrDisableButtons(Btns);
   setTimeout(() => {
     switch (ButtonActivated) {
       case ButtonType.Veca:
@@ -123,7 +123,7 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-          EnableorDisableButtons(Btns);
+          EnableOrDisableButtons(Btns);
         } else {
           MsgModal.style.display = "block";
           StopAndRestart(
@@ -135,7 +135,7 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-          EnableorDisableButtons(Btns);
+          EnableOrDisableButtons(Btns);
         }
 
         break;
@@ -150,7 +150,7 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-          EnableorDisableButtons(Btns);
+          EnableOrDisableButtons(Btns);
         } else {
           MsgModal.style.display = "block";
           StopAndRestart(
@@ -162,7 +162,7 @@ export function SolveProblem(
             BrojDrzava,
             Igrac
           );
-          EnableorDisableButtons(Btns);
+          EnableOrDisableButtons(Btns);
 
           break;
         }
@@ -176,6 +176,6 @@ export async function GetNumberOfCountries() {
   return DrzaveList.length;
 }
 
-function EnableorDisableButtons(BtnList: HTMLButtonElement[]) {
+function EnableOrDisableButtons(BtnList: HTMLButtonElement[]) {
   BtnList.forEach((Button) => (Button.hidden = !Button.hidden));
 }
